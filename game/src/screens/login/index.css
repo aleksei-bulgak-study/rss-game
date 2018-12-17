@@ -1,0 +1,43 @@
+div.login {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login_form {
+  text-align: center;
+}
+
+.login_content {
+  margin: 1em;
+}
+
+.login_label {
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.login_nickname {
+  font-size: 1.5em;
+}
+
+.login_button {
+  padding: 15px 70px;
+  border: 0;
+  background-color: #96c790;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+label.error {
+  display: block;
+  text-align: center;
+  font-size: 1.5em;
+  color: red;
+}

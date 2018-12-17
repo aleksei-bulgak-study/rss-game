@@ -1,0 +1,37 @@
+div.home {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.home_content {
+  text-align: center;
+}
+
+h1.home_title {
+  margin: 5px;
+  font-weight: bold;
+  font-size: 5em;
+  color: white;
+}
+
+.home_message {
+  color: white;
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.home_button {
+  padding: 15px 70px;
+  border: 0;
+  background-color: #96c790;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+

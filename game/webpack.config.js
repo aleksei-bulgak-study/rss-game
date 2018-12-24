@@ -43,6 +43,14 @@ module.exports = {
         from: './src/index.html',
         to: '../dist/index.html',
       },
+      {
+        from: './src/components/monster/images',
+        to: '../dist/images/monster',
+      },
+      {
+        from: './src/components/person/images',
+        to: '../dist/images/person',
+      },
     ]),
   ],
 

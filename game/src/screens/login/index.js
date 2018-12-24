@@ -11,13 +11,18 @@ const CONSTANTS = {
 export default class Login {
   static show() {
     document.body.querySelector(CONSTANTS.element).innerHTML = template;
-    Login.onPlay().catch(() => {
-      document.body.querySelector(CONSTANTS.error).innerHTML = CONSTANTS.errorMessage;
-    });
+    return this.processLogin();
   }
 
   static hide() {
     document.body.querySelector(CONSTANTS.element).innerHTML = '';
+  }
+
+  static processLogin() {
+    return Login.onPlay().catch(() => {
+      document.body.querySelector(CONSTANTS.error).innerHTML = CONSTANTS.errorMessage;
+      return this.processLogin();
+    });
   }
 
   static onPlay() {

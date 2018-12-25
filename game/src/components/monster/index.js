@@ -1,42 +1,16 @@
 import Utils from '../../services/util';
+import CONFIG from './files/config.json';
 
-const CONFIG = {
-  breath: {
-    min: -1, max: 5, interval: 2, current: 0, step: 0.1,
-  },
-  numberOfMonsters: 5,
-  numberOfParts: 5,
-  image: { path: './images/monster/', ext: '.png' },
-  head: {
-    image: 'head_',
-    ratio: { height: 0.72, width: 0.7 },
-  },
-  body: {
-    image: 'body_',
-    ratio: { height: 0.74, width: 0.7 },
-  },
-  legs: {
-    image: 'legs_',
-    ratio: { height: 0.9, width: 0.715 },
-  },
-  arms: {
-    image: 'arms_',
-    ratio: {
-      left: { height: 0.77, width: 0.62 },
-      right: { height: 0.77, width: 0.75 },
-    },
-    position: {
-      left: { height: 0, width: 90 },
-      right: { height: 0, width: 85 },
-    },
-  },
-};
+import AbstractCharacter from '../character';
 
-export default class MonsterComponent {
-  constructor(canvasContext) {
+export default class MonsterComponent extends AbstractCharacter {
+  constructor(canvasContext, name) {
+    super(name, CONFIG);
     this.ctx = canvasContext;
+    this.name = name;
     this.imagesLoadedCount = 0;
     this.breathInterval = 0;
+    this.hp = 100;
     this.build();
   }
 
@@ -69,18 +43,9 @@ export default class MonsterComponent {
     this.drawBody();
     this.drawHead();
     this.drawRightArm();
+    this.drawHP();
+    this.drawName();
     requestAnimationFrame(this.draw.bind(this));
-  }
-
-  recalculateBreath() {
-    if (this.breathInterval === CONFIG.breath.interval) {
-      this.breathInterval = 0;
-      CONFIG.breath.current += CONFIG.breath.step;
-      if (CONFIG.breath.current > CONFIG.breath.max || CONFIG.breath.current < CONFIG.breath.min) {
-        CONFIG.breath.step = -CONFIG.breath.step;
-      }
-    }
-    this.breathInterval += 1;
   }
 
   drawHead() {

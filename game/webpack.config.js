@@ -51,6 +51,10 @@ module.exports = {
         from: './src/components/person/images',
         to: '../dist/images/person',
       },
+      {
+        from: './src/components/fireball/images',
+        to: '../dist/images/fireball',
+      },
     ]),
   ],
 

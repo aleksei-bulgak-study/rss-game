@@ -3,16 +3,20 @@ import './index.css';
 
 import PersonComponent from '../../components/person';
 import MonsterComponent from '../../components/monster';
+import ModalComponent from '../../components/modal';
 
-const CONSTANTS = {
+import RandomNameGenerator from '../../services/name';
+
+const CONFIG = {
   element: 'div.container',
   canvas: 'canvas',
+  damage: 50,
 };
 
 export default class Battle {
   static initTemplate() {
-    document.body.querySelector(CONSTANTS.element).innerHTML = template;
-    const canvas = document.body.querySelector(CONSTANTS.canvas);
+    document.body.querySelector(CONFIG.element).innerHTML = template;
+    const canvas = document.body.querySelector(CONFIG.canvas);
     canvas.setAttribute('width', document.body.offsetWidth);
     canvas.setAttribute('height', document.body.offsetHeight);
   }
@@ -27,16 +31,20 @@ export default class Battle {
 
   start(session) {
     this.init();
-    this.initPerson();
+    this.initPerson(session);
     this.initMonster();
+
+    this.person.attack(() => { this.monster.health = CONFIG.damage; });
+
+    let modal = new ModalComponent("TEST MODAL!!");
   }
 
-  initPerson() {
-    this.person = new PersonComponent(this.ctx);
+  initPerson(session) {
+    this.person = new PersonComponent(this.ctx, session.nickName);
   }
 
   initMonster() {
-    this.monster = new MonsterComponent(this.ctx);
+    this.monster = new MonsterComponent(this.ctx, RandomNameGenerator.build());
   }
 
   refreshScreen() {

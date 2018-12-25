@@ -1,52 +1,47 @@
-const CONFIG = {
-  breath: {
-    min: -1, max: 3, interval: 5, current: 0, step: 0.1,
+import Fireball from '../fireball';
+import CONFIG from './files/config.json';
+
+import AbstractCharacter from '../character';
+
+const CONSTANTS = {
+  start: {
+    height: window.innerHeight * 0.85,
+    width: document.body.offsetWidth * 0.35,
   },
-  scaleRation: 6,
-  numberOfParts: 5,
-  image: { path: './images/person/', ext: '.png' },
-  head: {
-    image: 'head',
-    ratio: { height: 0.77, width: 0.29 },
-  },
-  body: {
-    image: 'body',
-    ratio: { height: 0.84, width: 0.295 },
-  },
-  legs: {
-    image: 'legs',
-    ratio: { height: 0.92, width: 0.3 },
-  },
-  arms: {
-    image: { left: 'arm_left', right: 'arm_right' },
-    ratio: {
-      left: { height: 0.85, width: 0.32 },
-      right: { height: 0.85, width: 0.29 },
-    },
-    position: {
-      left: { height: 0, width: 90 },
-      right: { height: 0, width: 85 },
-    },
+  finish: {
+    height: window.innerHeight * 0.85,
+    width: document.body.offsetWidth * 0.6,
   },
 };
 
-export default class PersonComponent {
-  constructor(canvasContext) {
+export default class PersonComponent extends AbstractCharacter {
+  constructor(canvasContext, name) {
+    super(name, CONFIG);
     this.ctx = canvasContext;
+    this.name = name;
+    this.weapon = this.initWeaponComponent();
+    this.hp = CONFIG.hp.value;
     this.imagesLoadedCount = 0;
     this.breathInterval = 0;
     this.build();
   }
 
-  build() {
-    this.legs = this.load(CONFIG.legs.image);
-    this.leftArm = this.load(CONFIG.arms.image.left);
-    this.body = this.load(CONFIG.body.image);
-    this.head = this.load(CONFIG.head.image);
-    this.rightArm = this.load(CONFIG.arms.image.right);
+  initWeaponComponent() {
+    const weapon = new Fireball(this.ctx);
+    weapon.start = CONSTANTS.start;
+    weapon.finish = CONSTANTS.finish;
+    return weapon;
   }
 
-  load(type) {
+  build() {
+    this.legs = this.loadCharacterPart(CONFIG.legs.image);
+    this.leftArm = this.loadCharacterPart(CONFIG.arms.image.left);
+    this.body = this.loadCharacterPart(CONFIG.body.image);
+    this.head = this.loadCharacterPart(CONFIG.head.image);
+    this.rightArm = this.loadCharacterPart(CONFIG.arms.image.right);
+  }
+
+  loadCharacterPart(type) {
     const image = new Image();
     image.src = PersonComponent.getPath(type);
     image.onload = () => this.onImageLoaded();
@@ -60,6 +55,10 @@ export default class PersonComponent {
     }
   }
 
+  attack(callback) {
+    this.weapon.performAttack(callback);
+  }
+
   draw() {
     this.recalculateBreath();
     this.drawLegs();
@@ -67,18 +66,9 @@ export default class PersonComponent {
     this.drawBody();
     this.drawRightArm();
     this.drawHead();
+    this.drawHP();
+    this.drawName();
     requestAnimationFrame(this.draw.bind(this));
-  }
-
-  recalculateBreath() {
-    if (this.breathInterval === CONFIG.breath.interval) {
-      this.breathInterval = 0;
-      CONFIG.breath.current += CONFIG.breath.step;
-      if (CONFIG.breath.current > CONFIG.breath.max || CONFIG.breath.current < CONFIG.breath.min) {
-        CONFIG.breath.step = -CONFIG.breath.step;
-      }
-    }
-    this.breathInterval += 1;
   }
 
   drawHead() {

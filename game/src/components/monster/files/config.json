@@ -1,0 +1,88 @@
+{
+  "breath": {
+    "min": -1,
+    "max": 5,
+    "interval": 2,
+    "current": 0,
+    "step": 0.1
+  },
+  "numberOfMonsters": 5,
+  "numberOfParts": 5,
+  "image": {
+    "path": "./images/monster/",
+    "ext": ".png"
+  },
+  "head": {
+    "image": "head_",
+    "ratio": {
+      "height": 0.72,
+      "width": 0.7
+    }
+  },
+  "body": {
+    "image": "body_",
+    "ratio": {
+      "height": 0.74,
+      "width": 0.7
+    }
+  },
+  "legs": {
+    "image": "legs_",
+    "ratio": {
+      "height": 0.9,
+      "width": 0.715
+    }
+  },
+  "arms": {
+    "image": "arms_",
+    "ratio": {
+      "left": {
+        "height": 0.77,
+        "width": 0.62
+      },
+      "right": {
+        "height": 0.77,
+        "width": 0.75
+      }
+    },
+    "position": {
+      "left": {
+        "height": 0,
+        "width": 90
+      },
+      "right": {
+        "height": 0,
+        "width": 85
+      }
+    }
+  },
+  "hp": {
+    "status": {
+      "NORMAL": {
+        "color": "green",
+        "value": 70
+      },
+      "AVERAGE": {
+        "color": "#f49842",
+        "value": 60
+      },
+      "CRITICAL": {
+        "color": "red",
+        "value": 30
+      }
+    },
+    "position": {
+      "height": 0.7,
+      "width": 0.72
+    }
+  },
+  "name": {
+    "position": {
+      "height": 0.6,
+      "width": 0.65
+    }
+  },
+  "text": {
+    "style": "48px serif"
+  }
+}

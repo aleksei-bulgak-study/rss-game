@@ -8,7 +8,7 @@ const CONFIG = {
     path: './images/fireball/fireball_',
     ext: '.png',
   },
-  step: 3,
+  step: 5,
 };
 
 export default class Fireball {
@@ -31,6 +31,7 @@ export default class Fireball {
       if (this.point.width >= this.finishPoint.width && this.index === CONFIG.images.count) {
         this.index = CONFIG.images.start;
         this.updateInterval = 0;
+        this.start = this.startPoint;
         this.attack = false;
         callback();
         return;
@@ -72,7 +73,7 @@ export default class Fireball {
 
   set start(start) {
     this.startPoint = start;
-    this.point = start;
+    this.point = JSON.parse(JSON.stringify(start));
   }
 
   set finish(finish) {

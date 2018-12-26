@@ -64,15 +64,15 @@
     "status": {
       "NORMAL": {
         "color": "green",
-        "value": 70
+        "value": 80
       },
       "AVERAGE": {
-        "color": "yellow",
-        "value": 30
+        "color": "#f49842",
+        "value": 70
       },
       "CRITICAL": {
         "color": "red",
-        "value": 30
+        "value": 40
       }
     },
     "position": {

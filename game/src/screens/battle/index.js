@@ -3,7 +3,7 @@ import './index.css';
 
 import PersonComponent from '../../components/person';
 import MonsterComponent from '../../components/monster';
-import ModalComponent from '../../components/modal';
+import TaskChooserComponent from '../../components/taskChooser';
 
 import RandomNameGenerator from '../../services/name';
 
@@ -11,6 +11,7 @@ const CONFIG = {
   element: 'div.container',
   canvas: 'canvas',
   damage: 50,
+  dead: 0,
 };
 
 export default class Battle {
@@ -26,17 +27,15 @@ export default class Battle {
     this.canvas = document.querySelector('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.ctx.imageSmoothingEnabled = false;
+    this.taskChooser = new TaskChooserComponent();
     this.refreshScreen();
   }
 
-  start(session) {
+  async start(session) {
     this.init();
     this.initPerson(session);
-    this.initMonster();
-
-    this.person.attack(() => { this.monster.health = CONFIG.damage; });
-
-    let modal = new ModalComponent("TEST MODAL!!");
+    this.initMonster(session);
+    return this.getFightResult();
   }
 
   initPerson(session) {
@@ -50,5 +49,27 @@ export default class Battle {
   refreshScreen() {
     this.canvas.width = this.canvas.width;
     window.requestAnimationFrame(() => this.refreshScreen());
+  }
+
+  async getFightResult() {
+    return this.taskChooser.choseComponent()
+      .then(task => task.execute())
+      .then((isCorrectAnswer) => {
+        if (isCorrectAnswer) {
+          this.person.attack(() => { this.monster.health = CONFIG.damage; });
+        } else {
+          this.monster.attack(() => { this.person.health = CONFIG.damage; });
+        }
+      }).then(() => {
+        if (this.monster.health === CONFIG.dead) {
+          this.levelUp();
+        }
+
+        if (this.person.health) {
+          return this.getFightResult();
+        }
+        // return current score or smth else cause user is dead
+        return '42';
+      });
   }
 }

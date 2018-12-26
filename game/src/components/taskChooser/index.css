@@ -1,0 +1,29 @@
+.task-container > h1 {
+  text-align: center;
+  color: #476144;
+}
+
+.task-container_element {
+  padding: 15px 70px;
+  margin: 5px 5px;
+  font-size: 1.5em;
+  color: white;
+  background-color: #96c790;
+  text-align: center;
+}
+
+.task-container_element:hover {
+  cursor: pointer;
+}
+
+.task-container_element:active {
+  box-shadow: inset 0 0 10px #005bb1;
+}
+
+.task-container_element:first-child {
+  margin-top: 10px;
+}
+
+.task-container_element:last-child {
+  margin-bottom: 10px;
+}

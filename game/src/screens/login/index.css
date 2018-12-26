@@ -16,13 +16,16 @@ div.login {
 }
 
 .login_label {
+  display: block;
   color: white;
   font-weight: bold;
   font-size: 2em;
 }
 
 .login_nickname {
-  font-size: 1.5em;
+  display: block;
+  margin: 1em auto;
+  font-size: 1.6em;
 }
 
 .login_button {

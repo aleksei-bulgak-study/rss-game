@@ -12,9 +12,10 @@ const app = async () => {
   Init.init();
   await Home.show();
   const nickName = await Login.show();
-  new Battle().start({
+  const results = await new Battle().start({
     nickName,
   });
+  console.log(results);
 };
 
 app();

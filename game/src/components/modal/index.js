@@ -1,21 +1,17 @@
 import './index.css';
 import template from './index.template.html';
 
-const CONFIG = {
-  element: '.modal',
+const CONST = {
+  modalWindowContainer: 'div',
+  contentElement: '.modal_content',
 };
 
-export default class ModalWindow {
-  constructor(childComponent) {
-    this.childComponent = childComponent;
-    this.draw(childComponent);
-  }
-
-  draw() {
-    this.container = document.createElement('div');
+export default class ModalWindowComponent {
+  show() {
+    this.container = document.createElement(CONST.modalWindowContainer);
     this.container.innerHTML = template;
     document.body.appendChild(this.container);
-    document.body.querySelector(CONFIG.element).appendChild(this.childComponent);
+    this.modal = this.container.querySelector(CONST.contentElement);
   }
 
   clean() {

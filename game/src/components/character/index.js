@@ -2,6 +2,13 @@ export default class AbstractCharacter {
   constructor(name, cfg) {
     this.name = name;
     this.cfg = cfg;
+    if (!new.target) {
+      throw Error('It is not allowed to create direct instance of AbstractCharacter');
+    }
+  }
+
+  attack(callback) {
+    callback();
   }
 
   recalculateBreath() {
@@ -31,6 +38,7 @@ export default class AbstractCharacter {
     this.ctx.fillStyle = this.getHpStatusColor();
     this.ctx.font = this.cfg.text.style;
     this.ctx.fillText(this.hp, widthPosition, heightPosition);
+    this.ctx.save();
   }
 
   getHpStatusColor() {
@@ -45,6 +53,14 @@ export default class AbstractCharacter {
   }
 
   set health(value) {
-    this.hp -= value;
+    if (this.hp > value) {
+      this.hp -= value;
+    } else {
+      this.hp = 0;
+    }
+  }
+
+  get health() {
+    return this.hp;
   }
 }

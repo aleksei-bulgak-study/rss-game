@@ -4,6 +4,7 @@ import './index.css';
 import PersonComponent from '../../components/person';
 import MonsterComponent from '../../components/monster';
 import TaskChooserComponent from '../../components/taskChooser';
+import LevelInfoComponent from '../../components/level';
 
 import RandomNameGenerator from '../../services/name';
 
@@ -12,6 +13,8 @@ const CONFIG = {
   canvas: 'canvas',
   damage: 50,
   dead: 0,
+  initialLevel: 0,
+  nextLevel: 1,
 };
 
 export default class Battle {
@@ -33,23 +36,30 @@ export default class Battle {
 
   async start(session) {
     this.session = session;
+    this.session.level = CONFIG.initialLevel;
     this.init();
-    this.initPerson(session);
-    this.initMonster(session);
+    this.initPerson();
+    this.initMonster();
+    this.initLevelInfo();
     return this.getFightResult();
   }
 
   async nextLevel() {
     await this.monster.death();
+    this.session.level += CONFIG.nextLevel;
     this.initMonster(this.session);
   }
 
-  initPerson(session) {
-    this.person = new PersonComponent(this.ctx, session.nickName);
+  initPerson() {
+    this.person = new PersonComponent(this.ctx, this.session.nickName);
   }
 
   initMonster() {
     this.monster = new MonsterComponent(this.ctx, RandomNameGenerator.build());
+  }
+
+  initLevelInfo() {
+    this.levelInfo = new LevelInfoComponent(this.ctx, this.session).draw();
   }
 
   refreshScreen() {
@@ -79,6 +89,6 @@ export default class Battle {
   }
 
   _buildResult() {
-    return '42';
+    return this.session;
   }
 }

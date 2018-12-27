@@ -34,6 +34,10 @@ export default class AbstractCharacter {
     return callback();
   }
 
+  async death() {
+    this._cancelAnimationFrame();
+  }
+
   recalculateBreath() {
     if (this.breathInterval === this.cfg.breath.interval) {
       this.breathInterval = 0;

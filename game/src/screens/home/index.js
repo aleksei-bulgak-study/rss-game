@@ -17,9 +17,13 @@ export default class Home {
 
   static onPlay() {
     return new Promise((resolve) => {
-      document.body.querySelector('button').addEventListener('click', () => {
+      document.body.querySelector('button.play').addEventListener('click', () => {
         Home.hide();
-        resolve(true);
+        resolve('start');
+      });
+      document.body.querySelector('button.score').addEventListener('click', () => {
+        Home.hide();
+        resolve('score');
       });
     });
   }

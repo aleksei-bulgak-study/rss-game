@@ -32,10 +32,16 @@ export default class Battle {
   }
 
   async start(session) {
+    this.session = session;
     this.init();
     this.initPerson(session);
     this.initMonster(session);
     return this.getFightResult();
+  }
+
+  async nextLevel() {
+    await this.monster.death();
+    this.initMonster(this.session);
   }
 
   initPerson(session) {
@@ -56,20 +62,23 @@ export default class Battle {
       .then(task => task.execute())
       .then((isCorrectAnswer) => {
         if (isCorrectAnswer) {
-          this.person.attack(() => { this.monster.health = CONFIG.damage; });
-        } else {
-          this.monster.attack(() => { this.person.health = CONFIG.damage; });
+          return this.person.attack(() => { this.monster.health = CONFIG.damage; });
         }
+        return this.monster.attack(() => { this.person.health = CONFIG.damage; });
       }).then(() => {
         if (this.monster.health === CONFIG.dead) {
-          this.levelUp();
+          this.nextLevel();
         }
 
-        if (this.person.health) {
-          return this.getFightResult();
+        if (this.person.health === CONFIG.dead) {
+          return this._buildResult();
         }
-        // return current score or smth else cause user is dead
-        return '42';
+
+        return this.getFightResult();
       });
+  }
+
+  _buildResult() {
+    return '42';
   }
 }

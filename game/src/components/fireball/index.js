@@ -23,10 +23,19 @@ export default class Fireball {
 
   performAttack(callback) {
     this.attack = true;
-    this.draw(callback);
+    return this.draw(callback);
   }
 
   draw(callback) {
+    return new Promise((resolve) => {
+      this._draw(callback, resolve);
+    });
+  }
+
+  _draw(callback, resolve) {
+    if (this.reqId) {
+      cancelAnimationFrame(this.reqId);
+    }
     if (this.attack) {
       if (this.point.width >= this.finishPoint.width && this.index === CONFIG.images.count) {
         this.index = CONFIG.images.start;
@@ -34,12 +43,14 @@ export default class Fireball {
         this.start = this.startPoint;
         this.attack = false;
         callback();
-        return;
+        resolve();
       }
-      if (this.index === CONFIG.images.indexOfSplash && this.point.width < this.finishPoint.width) {
+      if (this.index === CONFIG.images.indexOfSplash
+        && this.point.width < this.finishPoint.width) {
         this.index = CONFIG.images.start;
       }
-      if (this.point.width >= this.finishPoint.width && this.index < CONFIG.images.indexOfSplash) {
+      if (this.point.width >= this.finishPoint.width
+        && this.index < CONFIG.images.indexOfSplash) {
         this.index = CONFIG.images.indexOfSplash;
       }
       const img = this.images[this.index];
@@ -56,7 +67,7 @@ export default class Fireball {
         this.point.width += CONFIG.step;
       }
     }
-    window.requestAnimationFrame(() => this.draw(callback));
+    this.reqId = window.requestAnimationFrame(() => this._draw(callback, resolve));
   }
 
   loadImages() {

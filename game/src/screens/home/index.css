@@ -26,6 +26,8 @@ h1.home_title {
 
 .home_button {
   padding: 15px 70px;
+  display: block;
+  margin: 10px auto;
   border: 0;
   background-color: #96c790;
   color: white;

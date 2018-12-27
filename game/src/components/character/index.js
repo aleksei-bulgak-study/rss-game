@@ -7,8 +7,31 @@ export default class AbstractCharacter {
     }
   }
 
-  attack(callback) {
-    callback();
+  draw() {
+    this.recalculateBreath();
+    this.drawLegs();
+    this.drawLeftArm();
+    this.drawBody();
+    this.drawRightArm();
+    this.drawHead();
+    this.drawHP();
+    this.drawName();
+    this._requestAnimationFrame();
+  }
+
+  _requestAnimationFrame() {
+    this._cancelAnimationFrame();
+    this.reqId = requestAnimationFrame(this.draw.bind(this));
+  }
+
+  _cancelAnimationFrame() {
+    if (this.reqId) {
+      cancelAnimationFrame(this.reqId);
+    }
+  }
+
+  async attack(callback) {
+    return callback();
   }
 
   recalculateBreath() {

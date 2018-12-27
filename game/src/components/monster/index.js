@@ -36,18 +36,6 @@ export default class MonsterComponent extends AbstractCharacter {
     }
   }
 
-  draw() {
-    this.recalculateBreath();
-    this.drawLegs();
-    this.drawLeftArm();
-    this.drawBody();
-    this.drawHead();
-    this.drawRightArm();
-    this.drawHP();
-    this.drawName();
-    requestAnimationFrame(this.draw.bind(this));
-  }
-
   drawHead() {
     const heightPosition = document.body.offsetHeight * CONFIG.head.ratio.height
       - CONFIG.breath.current;

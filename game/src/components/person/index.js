@@ -55,20 +55,8 @@ export default class PersonComponent extends AbstractCharacter {
     }
   }
 
-  attack(callback) {
-    this.weapon.performAttack(callback);
-  }
-
-  draw() {
-    this.recalculateBreath();
-    this.drawLegs();
-    this.drawLeftArm();
-    this.drawBody();
-    this.drawRightArm();
-    this.drawHead();
-    this.drawHP();
-    this.drawName();
-    requestAnimationFrame(this.draw.bind(this));
+  async attack(callback) {
+    return this.weapon.performAttack(callback);
   }
 
   drawHead() {

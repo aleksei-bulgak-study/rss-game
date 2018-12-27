@@ -1,0 +1,54 @@
+div.score-container {
+  height: 100vh;
+}
+
+.score-container_title {  
+  margin: 0 auto 1em;
+  display: block;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+}
+
+table {
+  width: 60%;
+  margin: 0 auto 1em;
+  border-collapse: collapse;
+  text-align: center;
+  background-color: rgba(150, 199, 144, 0.5);
+}
+
+table th {
+  padding: 10px 15px;
+  font-weight: bold;
+  color: #073899;
+  background-color: #97ca92;
+}
+
+table>tbody>tr:hover {
+  background-color: #becaf8;
+}
+
+table td {
+  position: relative;
+  padding: 0.5em 15em;
+  color: #666699;
+  border-top: 1px solid #e8edff;
+}
+
+tbody>tr:nth-child(2n + 1) {
+  background-color: #e8edff;
+}
+
+button {
+  display: block;
+  margin: 1em auto;
+  padding: 15px 70px;
+  border: 0;
+  background-color: #96c790;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5em;
+  cursor: pointer;
+}

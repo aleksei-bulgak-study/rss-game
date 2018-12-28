@@ -1,18 +1,18 @@
 import template from './index.template.html';
 import './index.css';
 
-import AbstractTask from '../base';
-import MathService from '../../../services/math';
+import AbstractTaskComponent from '../base';
+import SpeechService from '../../../services/speech';
 
 const CONST = {
   task: {
-    description: '.task_description',
     input: '.task_input',
     submit: '.task_submit',
+    play: '.task_play',
   },
 };
 
-export default class MathTaskComponent extends AbstractTask {
+export default class AuditionTaskComponent extends AbstractTaskComponent {
   show() {
     super.show();
     this.modal.innerHTML = template;
@@ -20,15 +20,16 @@ export default class MathTaskComponent extends AbstractTask {
 
   process() {
     return new Promise((resoleve) => {
-      const task = MathService.getRandomTask();
+      const task = SpeechService.getRandomTask();
       const input = this.modal.querySelector(CONST.task.input);
-      this.modal.querySelector(CONST.task.description).innerHTML = task;
       this.modal.querySelector(CONST.task.submit).addEventListener('click', () => {
-        const answer = parseInt(input.value, 10);
-        if (MathService.isAnswerValid(task, answer)) {
+        if (SpeechService.isAnswerValid(task, input.value)) {
           resoleve(true);
         }
         resoleve(false);
+      });
+      this.modal.querySelector(CONST.task.play).addEventListener('click', async () => {
+        return SpeechService.pronounce(task);
       });
     });
   }

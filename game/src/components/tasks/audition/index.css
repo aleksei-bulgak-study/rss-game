@@ -1,0 +1,36 @@
+.task {
+  padding: 15px 70px;
+  font-size: 1.5em;
+  color: gray;
+  border: 0;
+  background-color: #e3f1fc;
+  text-align: center;
+}
+
+.task_input {
+  font-size: 1.2em;
+}
+
+.task_play {
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border-radius: 50%;
+  background-color: #6495ed;
+  outline: none;
+}
+
+.task_play:active {
+  box-shadow: inset 0 0 10px #005bb1;
+}
+
+.task_submit {
+  margin: 1em auto;
+  display: block;
+  padding: 15px 70px;
+  background-color: #96c790;
+  color: white;
+  border: 0;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+}

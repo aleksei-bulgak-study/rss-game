@@ -3,6 +3,8 @@ import './index.css';
 
 import ModalWindowComponent from '../modal';
 import MathTaskComponent from '../tasks/math';
+import TranlsationTaskComponent from '../tasks/translate';
+import AuditionTaskComponent from '../tasks/audition';
 
 const CONST = {
   taskSelector: '.task-container_element',
@@ -18,6 +20,8 @@ export default class TaskChooserComponent extends ModalWindowComponent {
   initTasks() {
     return {
       math: MathTaskComponent,
+      translation: TranlsationTaskComponent,
+      audition: AuditionTaskComponent,
     };
   }
 

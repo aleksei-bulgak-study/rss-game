@@ -4,12 +4,13 @@
 }
 
 .task-container_element {
-  padding: 15px 70px;
+  padding: 2% 5%;
   margin: 5px 5px;
   font-size: 1.5em;
   color: white;
   background-color: #96c790;
   text-align: center;
+  overflow: hidden;
 }
 
 .task-container_element:hover {

@@ -3,15 +3,30 @@ import CONFIG from './files/config.json';
 
 import AbstractCharacter from '../character';
 
+import Magic from '../magic';
+
+const CONSTANTS = {
+  position: {
+    height: window.innerHeight * (CONFIG.arms.attack.position.height),
+    width: document.body.offsetWidth * CONFIG.arms.attack.position.width,
+  },
+};
+
 export default class MonsterComponent extends AbstractCharacter {
   constructor(canvasContext, name) {
-    super(name, CONFIG);
-    this.ctx = canvasContext;
-    this.name = name;
-    this.imagesLoadedCount = 0;
-    this.breathInterval = 0;
-    this.hp = 100;
+    super(name, canvasContext, CONFIG);
+    this.weapon = this.initWeaponComponent();
     this.build();
+  }
+
+  initWeaponComponent() {
+    const weapon = new Magic(this.ctx);
+    weapon.position = CONSTANTS.position;
+    return weapon;
+  }
+
+  async attack(callback) {
+    return this.weapon.performAttack(callback);
   }
 
   build() {
@@ -38,7 +53,7 @@ export default class MonsterComponent extends AbstractCharacter {
 
   drawHead() {
     const heightPosition = document.body.offsetHeight * CONFIG.head.ratio.height
-      - CONFIG.breath.current;
+      - this.breath.current;
     const widthPosition = document.body.offsetWidth * CONFIG.head.ratio.width;
     this.ctx.drawImage(this.head, widthPosition, heightPosition);
   }
@@ -56,21 +71,34 @@ export default class MonsterComponent extends AbstractCharacter {
   }
 
   drawLeftArm() {
+    const armWidth = this.leftArm.width - CONFIG.arms.position.left.width;
     const heightPosition = document.body.offsetHeight * CONFIG.arms.ratio.left.height
-      - CONFIG.breath.current;
+      - this.breath.current;
     const widthPosition = document.body.offsetWidth * CONFIG.arms.ratio.left.width;
+    this.ctx.translate(widthPosition + armWidth, heightPosition);
+    this._rotateHand();
     this.ctx.drawImage(
       this.leftArm,
       CONFIG.arms.position.left.width, 0,
-      this.leftArm.width - CONFIG.arms.position.left.width, this.leftArm.height,
-      widthPosition, heightPosition,
-      this.leftArm.width - CONFIG.arms.position.left.width, this.leftArm.height,
+      armWidth, this.leftArm.height,
+      -armWidth, 0,
+      armWidth, this.leftArm.height,
     );
+    this.ctx.restore();
+  }
+
+  _rotateHand() {
+    this.ctx.rotate(this.handAngle * Math.PI / 180);
+    if (this.weapon.attack && this.handAngle < this.cfg.arms.attack.angle) {
+      this.handAngle += this.cfg.arms.attack.step;
+    } else if (!this.weapon.attack && this.handAngle > 0) {
+      this.handAngle -= this.cfg.arms.attack.step;
+    }
   }
 
   drawRightArm() {
     const heightPosition = document.body.offsetHeight * CONFIG.arms.ratio.right.height
-      - CONFIG.breath.current;
+      - this.breath.current;
     const widthPosition = document.body.offsetWidth * CONFIG.arms.ratio.right.width;
     this.ctx.drawImage(
       this.rightArm,

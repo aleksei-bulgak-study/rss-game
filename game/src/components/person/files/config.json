@@ -57,6 +57,10 @@
         "height": 0,
         "width": 85
       }
+    },
+    "attack": {
+      "angle": 90,
+      "step": 10
     }
   },
   "hp": {

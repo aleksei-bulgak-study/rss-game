@@ -55,6 +55,10 @@ module.exports = {
         from: './src/components/fireball/images',
         to: '../dist/images/fireball',
       },
+      {
+        from: './src/components/magic/images',
+        to: '../dist/images/magic',
+      },
     ]),
   ],
 

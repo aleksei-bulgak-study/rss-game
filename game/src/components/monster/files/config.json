@@ -54,9 +54,18 @@
         "height": 0,
         "width": 85
       }
+    },
+    "attack": {
+      "angle": 90,
+      "step": 10,
+      "position": {
+        "height": 0.45,
+        "width": 0.6
+      }
     }
   },
   "hp": {
+    "value": 100,
     "status": {
       "NORMAL": {
         "color": "green",

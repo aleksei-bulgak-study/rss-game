@@ -16,13 +16,8 @@ const CONSTANTS = {
 
 export default class PersonComponent extends AbstractCharacter {
   constructor(canvasContext, name) {
-    super(name, CONFIG);
-    this.ctx = canvasContext;
-    this.name = name;
+    super(name, canvasContext, CONFIG);
     this.weapon = this.initWeaponComponent();
-    this.hp = CONFIG.hp.value;
-    this.imagesLoadedCount = 0;
-    this.breathInterval = 0;
     this.build();
   }
 
@@ -61,7 +56,7 @@ export default class PersonComponent extends AbstractCharacter {
 
   drawHead() {
     const heightPosition = document.body.offsetHeight * CONFIG.head.ratio.height
-      - CONFIG.breath.current;
+      - this.breath.current;
     const widthPosition = document.body.offsetWidth * CONFIG.head.ratio.width;
     const widthSize = this.head.width / CONFIG.scaleRation;
     const heightSize = this.head.height / CONFIG.scaleRation;
@@ -86,20 +81,32 @@ export default class PersonComponent extends AbstractCharacter {
 
   drawLeftArm() {
     const heightPosition = document.body.offsetHeight * CONFIG.arms.ratio.left.height
-      - CONFIG.breath.current;
+      - this.breath.current;
     const widthPosition = document.body.offsetWidth * CONFIG.arms.ratio.left.width;
     const widthSize = this.leftArm.width / CONFIG.scaleRation;
     const heightSize = this.leftArm.height / CONFIG.scaleRation;
-    this.ctx.drawImage(
-      this.leftArm,
-      widthPosition, heightPosition,
-      widthSize, heightSize,
-    );
+    this.ctx.save();
+    this.ctx.translate(widthPosition, heightPosition);
+    this._rotateHand();
+    this.ctx.drawImage(this.leftArm, 0, 0, widthSize, heightSize);
+    this.ctx.restore();
+  }
+
+  _rotateHand() {
+    this.ctx.rotate(this.handAngle * Math.PI / 180);
+    if (this.weapon.attack && this.handAngle > -this.cfg.arms.attack.angle) {
+      this.handAngle -= this.cfg.arms.attack.step;
+    } else if (!this.weapon.attack && this.handAngle < 0) {
+      this.handAngle += this.cfg.arms.attack.step;
+    }
+    if (this.handAngle !== 0) {
+      this.ctx.scale(-1, 1);
+    }
   }
 
   drawRightArm() {
     const heightPosition = document.body.offsetHeight * CONFIG.arms.ratio.right.height
-      - CONFIG.breath.current;
+      - this.breath.current;
     const widthPosition = document.body.offsetWidth * CONFIG.arms.ratio.right.width;
     const widthSize = this.rightArm.width / CONFIG.scaleRation;
     const heightSize = this.rightArm.height / CONFIG.scaleRation;

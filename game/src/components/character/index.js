@@ -1,7 +1,23 @@
+const CONST = {
+  breath: {
+    intervalStep: 1,
+    default: 0,
+  },
+};
+
 export default class AbstractCharacter {
-  constructor(name, cfg) {
+  constructor(name, ctx, cfg) {
     this.name = name;
     this.cfg = cfg;
+    this.ctx = ctx;
+    this.name = name;
+    this.hp = cfg.hp.value;
+    this.breath = {
+      interval: 0,
+      current: CONST.breath.default,
+    };
+    this.imagesLoadedCount = 0;
+    this.handAngle = 0;
     if (!new.target) {
       throw Error('It is not allowed to create direct instance of AbstractCharacter');
     }
@@ -39,15 +55,15 @@ export default class AbstractCharacter {
   }
 
   recalculateBreath() {
-    if (this.breathInterval === this.cfg.breath.interval) {
-      this.breathInterval = 0;
-      this.cfg.breath.current += this.cfg.breath.step;
-      if (this.cfg.breath.current > this.cfg.breath.max
-        || this.cfg.breath.current < this.cfg.breath.min) {
+    if (this.breath.interval === this.cfg.breath.interval) {
+      this.breath.interval = CONST.breath.default;
+      this.breath.current += this.cfg.breath.step;
+      if (this.breath.current > this.cfg.breath.max
+        || this.breath.current < this.cfg.breath.min) {
         this.cfg.breath.step = -this.cfg.breath.step;
       }
     }
-    this.breathInterval += 1;
+    this.breath.interval += CONST.breath.intervalStep;
   }
 
   drawName() {

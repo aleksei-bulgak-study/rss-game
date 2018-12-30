@@ -5,7 +5,7 @@ import ScoreService from '../../services/score';
 
 const CONSTANTS = {
   element: 'div.container',
-  scoreContainer: 'div.score-container>table>tbody',
+  scoreContainer: 'div.score-container table>tbody',
   retryAction: 'start',
 };
 
@@ -38,6 +38,7 @@ export default class ScoreBoard {
   _drawScores() {
     const fragment = document.createDocumentFragment();
     this.storage.load()
+      .slice(0, 10)
       .sort((f, s) => s.level - f.level)
       .forEach((score) => {
         const element = this._createElementWithClass('tr');

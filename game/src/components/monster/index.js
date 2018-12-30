@@ -30,16 +30,21 @@ export default class MonsterComponent extends AbstractCharacter {
   }
 
   build() {
-    this.legs = this.load(CONFIG.legs.image);
-    this.leftArm = this.load(CONFIG.arms.image);
-    this.body = this.load(CONFIG.body.image);
-    this.head = this.load(CONFIG.head.image);
-    this.rightArm = this.load(CONFIG.arms.image);
+    this.legs = this.loadRandom(CONFIG.legs.image);
+    this.leftArm = this.loadRandom(CONFIG.arms.image);
+    this.body = this.loadRandom(CONFIG.body.image);
+    this.head = this.loadRandom(CONFIG.head.image);
+    this.rightArm = this.loadRandom(CONFIG.arms.image);
+    this.dead = this.load(MonsterComponent.getPath(CONFIG.death.image, ''));
   }
 
-  load(type) {
+  loadRandom(type) {
+    return this.load(MonsterComponent.getRandomPath(type));
+  }
+
+  load(path) {
     const image = new Image();
-    image.src = MonsterComponent.getPath(type);
+    image.src = path;
     image.onload = () => this.onImageLoaded();
     return image;
   }
@@ -109,7 +114,11 @@ export default class MonsterComponent extends AbstractCharacter {
     );
   }
 
-  static getPath(type) {
-    return CONFIG.image.path + type + Utils.random(CONFIG.numberOfMonsters) + CONFIG.image.ext;
+  static getPath(type, index) {
+    return CONFIG.image.path + type + index + CONFIG.image.ext;
+  }
+
+  static getRandomPath(type) {
+    return MonsterComponent.getPath(type, Utils.random(CONFIG.numberOfMonsters));
   }
 }

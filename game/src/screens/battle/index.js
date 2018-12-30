@@ -75,9 +75,9 @@ export default class Battle {
           return this.person.attack(() => { this.monster.health = CONFIG.damage; });
         }
         return this.monster.attack(() => { this.person.health = CONFIG.damage; });
-      }).then(() => {
+      }).then(async () => {
         if (this.monster.health === CONFIG.dead) {
-          this.nextLevel();
+          await this.nextLevel();
         }
 
         if (this.person.health === CONFIG.dead) {

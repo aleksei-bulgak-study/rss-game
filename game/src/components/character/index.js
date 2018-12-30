@@ -3,6 +3,9 @@ const CONST = {
     intervalStep: 1,
     default: 0,
   },
+  death: {
+    period: 2,
+  },
 };
 
 export default class AbstractCharacter {
@@ -52,6 +55,26 @@ export default class AbstractCharacter {
 
   async death() {
     this._cancelAnimationFrame();
+    this.deathTime = performance.now();
+    return new Promise((resolve) => {
+      this._death(resolve);
+    });
+  }
+
+  _death(resolve) {
+    if (this._getExectionTime(this.deathTime) > CONST.death.period) {
+      resolve();
+      return;
+    }
+    const heightPosition = document.body.offsetHeight - this.dead.height - 10;
+    const widthPosition = document.body.offsetWidth * this.cfg.body.ratio.width;
+    this.ctx.drawImage(this.dead, widthPosition, heightPosition);
+    this._cancelAnimationFrame();
+    this.reqId = requestAnimationFrame(() => this._death(resolve));
+  }
+
+  _getExectionTime(start) {
+    return (performance.now() - start) / 1000;
   }
 
   recalculateBreath() {

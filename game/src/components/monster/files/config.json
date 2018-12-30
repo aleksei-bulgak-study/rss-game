@@ -85,6 +85,9 @@
       "width": 0.72
     }
   },
+  "death": {
+    "image": "dead"
+  },
   "name": {
     "position": {
       "height": 0.6,

@@ -38,8 +38,8 @@ export default class ScoreBoard {
   _drawScores() {
     const fragment = document.createDocumentFragment();
     this.storage.load()
-      .slice(0, 10)
       .sort((f, s) => s.level - f.level)
+      .slice(0, 10)
       .forEach((score) => {
         const element = this._createElementWithClass('tr');
         const name = this._createElementWithClass('td');

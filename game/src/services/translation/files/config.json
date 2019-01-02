@@ -1,31 +1,33 @@
-[
-  {
-    "word": "test",
-    "translations": [
-      "тест",
-      "тэст"
-    ]
-  },
-  {
-    "word": "table",
-    "translations": [
-      "стол",
-      "столик"
-    ]
-  },
-  {
-    "word": "window",
-    "translations": [
-      "окно",
-      "окошечко",
-      "оконце"
-    ]
-  },
-  {
-    "word": "laptop",
-    "translations": [
-      "ноутбук",
-      "компьютер"
-    ]
-  }
-]
+{
+  "dictionary": [
+    {
+      "word": "test",
+      "translations": [
+        "тест",
+        "тэст"
+      ]
+    },
+    {
+      "word": "table",
+      "translations": [
+        "стол",
+        "столик"
+      ]
+    },
+    {
+      "word": "window",
+      "translations": [
+        "окно",
+        "окошечко",
+        "оконце"
+      ]
+    },
+    {
+      "word": "laptop",
+      "translations": [
+        "ноутбук",
+        "компьютер"
+      ]
+    }
+  ]
+}

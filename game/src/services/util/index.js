@@ -1,7 +1,7 @@
 const EMPTY_TEXT = '';
 
 export default class Utils {
-  static random(max, min = 0) {
+  static random(max = 0, min = 0) {
     return Math.floor(Math.random() * max) + min;
   }
 

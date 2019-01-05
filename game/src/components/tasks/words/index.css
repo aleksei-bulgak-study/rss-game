@@ -1,0 +1,11 @@
+.letter {
+  display: inline-block;
+  margin: 1% 3%;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.letter_value {
+  padding: 0 0.5em;
+  cursor: move;
+}

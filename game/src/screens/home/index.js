@@ -8,6 +8,7 @@ const CONSTANTS = {
 export default class Home {
   static show() {
     document.body.querySelector(CONSTANTS.element).innerHTML = template;
+    document.body.querySelector('button.play').focus();
     return Home.onPlay();
   }
 

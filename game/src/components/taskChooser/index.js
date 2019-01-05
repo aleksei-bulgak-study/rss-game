@@ -5,6 +5,7 @@ import ModalWindowComponent from '../modal';
 import MathTaskComponent from '../tasks/math';
 import TranlsationTaskComponent from '../tasks/translate';
 import AuditionTaskComponent from '../tasks/audition';
+import WordsTaskComponent from '../tasks/words';
 
 const CONST = {
   taskSelector: '.task-container_element',
@@ -22,6 +23,7 @@ export default class TaskChooserComponent extends ModalWindowComponent {
       math: MathTaskComponent,
       translation: TranlsationTaskComponent,
       audition: AuditionTaskComponent,
+      word: WordsTaskComponent,
     };
   }
 

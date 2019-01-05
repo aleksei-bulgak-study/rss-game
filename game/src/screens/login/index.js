@@ -6,6 +6,7 @@ const CONSTANTS = {
   input: 'input#nickname',
   error: 'label.error',
   errorMessage: 'Nickname can not be null or empty',
+  enterKey: 13,
 };
 
 export default class Login {
@@ -26,14 +27,22 @@ export default class Login {
   }
 
   static onPlay() {
+    const input = document.body.querySelector(CONSTANTS.input);
+    input.focus();
     return new Promise((resolve, reject) => {
-      document.body.querySelector('button').addEventListener('click', (e) => {
+      const button = document.body.querySelector('button');
+      button.addEventListener('click', (e) => {
         e.preventDefault();
-        const nickName = document.body.querySelector(CONSTANTS.input).value;
+        const nickName = input.value;
         if (nickName) {
           resolve(nickName);
         }
         reject();
+      });
+      button.addEventListener('keyup', (event) => {
+        if (event.keyCode === CONSTANTS.enterKey) {
+          button.click();
+        }
       });
     });
   }

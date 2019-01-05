@@ -9,8 +9,6 @@ body {
 .container {
   width: 100vw;
   height: 100vh;
-  min-height: 960px;
-  min-width: 1920px;
 
   background-image: url(./images/background.png);
   background-repeat: no-repeat;

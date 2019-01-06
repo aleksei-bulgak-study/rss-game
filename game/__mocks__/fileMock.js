@@ -24,4 +24,7 @@ module.exports = {
       ],
     },
   ],
+  words: [
+    'mock',
+  ],
 };

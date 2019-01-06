@@ -59,6 +59,14 @@ module.exports = {
         from: './src/components/magic/images',
         to: '../dist/images/magic',
       },
+      {
+        from: './src/components/fireball/audio',
+        to: '../dist/audio',
+      },
+      {
+        from: './src/components/magic/audio',
+        to: '../dist/audio',
+      },
     ]),
   ],
 

@@ -8,6 +8,9 @@ const CONFIG = {
     path: './images/fireball/fireball_',
     ext: '.png',
   },
+  audio: {
+    path: './audio/fireball_attack.mp3',
+  },
   step: 5,
 };
 
@@ -18,6 +21,7 @@ export default class Fireball {
     this.index = CONFIG.images.start;
     this.updateInterval = 0;
     this.images = [];
+    this.audio = new Audio(CONFIG.audio.path);
     this.loadImages();
   }
 
@@ -28,8 +32,13 @@ export default class Fireball {
 
   draw(callback) {
     return new Promise((resolve) => {
+      this._play();
       this._draw(callback, resolve);
     });
+  }
+
+  _play() {
+    this.audio.play();
   }
 
   _draw(callback, resolve) {
@@ -42,6 +51,7 @@ export default class Fireball {
         this.updateInterval = 0;
         this.start = this.startPoint;
         this.attack = false;
+        this.audio.pause();
         callback();
         resolve();
       }

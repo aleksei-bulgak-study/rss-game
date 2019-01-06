@@ -34,13 +34,18 @@ export default class Magic {
 
   draw(callback) {
     return new Promise((resolve) => {
-      this._play();
+      this._playSound();
       this._draw(callback, resolve);
     });
   }
 
-  _play() {
+  _playSound() {
     this.audio.play();
+  }
+
+  _stopSound() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
   }
 
   _draw(callback, resolve) {
@@ -52,7 +57,7 @@ export default class Magic {
         this.index = CONFIG.images.start;
         this.updateInterval = 0;
         this.attack = false;
-        this.audio.pause();
+        this._stopSound();
         callback();
         resolve();
       }

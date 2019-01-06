@@ -55,4 +55,21 @@ describe('Utils', () => {
       }
     });
   });
+
+  describe('shuffle', () => {
+    it('simple array', () => {
+      const array = [1, 2, 3, 4];
+      expect(Utils.shuffle(array)).not.toEqual(array);
+    });
+
+    it('array with 1 element', () => {
+      const array = [1];
+      expect(Utils.shuffle(array)).toEqual(array);
+    });
+
+    it('when array is empty', () => {
+      const array = [];
+      expect(Utils.shuffle(array)).toEqual(array);
+    });
+  });
 });

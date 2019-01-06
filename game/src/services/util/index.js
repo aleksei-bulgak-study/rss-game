@@ -10,7 +10,7 @@ export default class Utils {
   }
 
   static shuffle(array) {
-    const tmpArray = array;
+    const tmpArray = [...array];
     for (let i = tmpArray.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [tmpArray[i], tmpArray[j]] = [tmpArray[j], tmpArray[i]];

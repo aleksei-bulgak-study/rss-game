@@ -28,9 +28,8 @@ export default class AuditionTaskComponent extends AbstractTaskComponent {
         }
         resoleve(false);
       });
-      this.modal.querySelector(CONST.task.play).addEventListener('click', async () => {
-        return SpeechService.pronounce(task);
-      });
+      this.modal.querySelector(CONST.task.play).addEventListener('click',
+        async () => SpeechService.pronounce(task));
     });
   }
 }

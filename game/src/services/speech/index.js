@@ -15,7 +15,6 @@ export default class SpeechService {
 
   static pronounce(word) {
     return new Promise((resolve) => {
-      console.log('speack');
       const utterance = new SpeechSynthesisUtterance(Utils.normalizeText(word));
       utterance.onend = () => resolve();
       window.speechSynthesis.cancel();

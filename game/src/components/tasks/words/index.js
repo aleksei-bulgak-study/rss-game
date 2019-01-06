@@ -58,6 +58,7 @@ export default class WordTaskComponent extends AbstractTaskComponent {
   }
 
   _dragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.id);
     const value = event.target.closest(CONST.letter.valueSelector);
     if (value) {
       this.index = this._getIndexOfLetter(value);

@@ -36,4 +36,24 @@ h1.home_title {
   cursor: pointer;
 }
 
+.home_screens img{
+  position: absolute;
+  max-width: 20%;
+      box-shadow: 0px 0px 20px 3px #b8cdf5;
+}
 
+.home_screens img:first-child{
+  left: 1%;
+}
+
+.home_screens img:last-child{
+  right: 1%;
+}
+
+.home_screens.top img {
+  top: 1%;
+}
+
+.home_screens.bottom img {
+  bottom: 1%;
+}

@@ -2,6 +2,7 @@ import template from './index.template.html';
 import './index.css';
 
 import ScoreService from '../../services/score';
+import MongoScoreService from '../../services/mongo';
 
 const CONSTANTS = {
   element: 'div.container',
@@ -11,16 +12,17 @@ const CONSTANTS = {
 
 export default class ScoreBoard {
   constructor() {
-    this.storage = new ScoreService();
+    this.storage = new MongoScoreService();
+    this.oldStorage = new ScoreService();
   }
 
   storeResult(results) {
-    this.storage.store(results);
+    return this.storage.store(results);
   }
 
-  show() {
+  async show() {
     document.body.querySelector(CONSTANTS.element).innerHTML = template;
-    this._drawScores();
+    await this._drawScores();
     return this._initEventListeners();
   }
 
@@ -36,10 +38,10 @@ export default class ScoreBoard {
     });
   }
 
-  _drawScores() {
+  async _drawScores() {
     const fragment = document.createDocumentFragment();
-    this.storage.load()
-      .sort((f, s) => s.level - f.level)
+    const scores = await this.storage.load();
+    scores.sort((f, s) => s.level - f.level)
       .slice(0, 10)
       .forEach((score) => {
         const element = this._createElementWithClass('tr');

@@ -20,7 +20,7 @@ async function processAction(action) {
     const result = await new Battle().start({
       nickName,
     });
-    new ScoreBoard().storeResult(result);
+    await new ScoreBoard().storeResult(result);
   }
   processAction(await new ScoreBoard().show());
 }

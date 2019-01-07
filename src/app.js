@@ -2,7 +2,7 @@ var express = require('express');
 const bodyParser = require('body-parser');
 
 //require('./mongo/mongo');
-
+const PORT = process.env.PORT;
 const app = express();
 app.use(bodyParser.json());
 
@@ -22,4 +22,4 @@ app.post('/scores', (req, resp) => {
     resp.status(204).send();
   });
 
-app.listen(3000);
+app.listen(PORT);

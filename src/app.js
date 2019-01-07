@@ -1,7 +1,9 @@
 var express = require('express');
 const bodyParser = require('body-parser');
 
-//require('./mongo/mongo');
+const asyncHandler = require('./utils/utils')
+const ScoreModel = require('./mongo/mongo');
+
 const PORT = process.env.PORT;
 const app = express();
 app.use(bodyParser.json());
@@ -13,13 +15,21 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/scores', (req, resp) => {
-    //fetch data
-    resp.send('test');
+app.get('/scores',
+  asyncHandler(async (req, res) => {
+    const scores = await ScoreModel.load();
+
+    res.json(scores);
+    res.end();
   })
-app.post('/scores', (req, resp) => {
-    // save
-    resp.status(204).send();
-  });
+);
+app.post('/scores',
+  asyncHandler(async (req, res) => {
+    const result = await ScoreModel.create(req.body);
+
+    res.json(result);
+    res.end();
+  })
+);
 
 app.listen(PORT);

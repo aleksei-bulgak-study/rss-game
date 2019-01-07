@@ -11,10 +11,14 @@ import RandomNameGenerator from '../../services/name';
 const CONFIG = {
   element: 'div.container',
   canvas: 'canvas',
-  damage: 50,
+  damage: 10,
   dead: 0,
   initialLevel: 0,
   nextLevel: 1,
+  banner: {
+    text: 'Please wait. Loading components.',
+    style: '2em serif',
+  },
 };
 
 export default class Battle {
@@ -23,6 +27,17 @@ export default class Battle {
     const canvas = document.body.querySelector(CONFIG.canvas);
     canvas.setAttribute('width', document.body.offsetWidth);
     canvas.setAttribute('height', document.body.offsetHeight);
+  }
+
+  async start(session) {
+    this.session = session;
+    this.session.level = CONFIG.initialLevel;
+    this.loaded = false;
+    this.init();
+    await Promise.all([this.initPerson(), this.initMonster()]);
+    this.initLevelInfo();
+    this.loaded = true;
+    return this.getFightResult();
   }
 
   init() {
@@ -34,37 +49,37 @@ export default class Battle {
     this.refreshScreen();
   }
 
-  async start(session) {
-    this.session = session;
-    this.session.level = CONFIG.initialLevel;
-    this.init();
-    this.initPerson();
-    this.initMonster();
-    this.initLevelInfo();
-    return this.getFightResult();
+  refreshScreen() {
+    this.canvas.width = this.canvas.width;
+    if (this.frameId) {
+      window.cancelAnimationFrame(this.frameId);
+    }
+
+    if (!this.loaded) {
+      this._drawBanner();
+    }
+
+    this.frameId = window.requestAnimationFrame(() => this.refreshScreen());
   }
 
   async nextLevel() {
     await this.monster.death();
     this.session.level += CONFIG.nextLevel;
-    this.initMonster(this.session);
+    await this.initMonster(this.session);
   }
 
   initPerson() {
     this.person = new PersonComponent(this.ctx, this.session.nickName);
+    return this.person.build();
   }
 
   initMonster() {
     this.monster = new MonsterComponent(this.ctx, RandomNameGenerator.build());
+    return this.monster.build();
   }
 
   initLevelInfo() {
     this.levelInfo = new LevelInfoComponent(this.ctx, this.session).draw();
-  }
-
-  refreshScreen() {
-    this.canvas.width = this.canvas.width;
-    window.requestAnimationFrame(() => this.refreshScreen());
   }
 
   async getFightResult() {
@@ -90,5 +105,17 @@ export default class Battle {
 
   _buildResult() {
     return this.session;
+  }
+
+  _drawBanner() {
+    this.ctx.save();
+    this.ctx.font = CONFIG.banner.style;
+
+    const heightPosition = this.canvas.height / 2;
+    const widthPosition = this.canvas.width / 2;
+    const textWidth = this.ctx.measureText(CONFIG.banner.text).width;
+
+    this.ctx.fillText(CONFIG.banner.text, (widthPosition) - (textWidth / 2), heightPosition);
+    this.ctx.restore();
   }
 }

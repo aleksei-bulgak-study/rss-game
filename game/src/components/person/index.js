@@ -18,7 +18,6 @@ export default class PersonComponent extends AbstractCharacter {
   constructor(canvasContext, name) {
     super(name, canvasContext, CONFIG);
     this.weapon = this.initWeaponComponent();
-    this.build();
   }
 
   initWeaponComponent() {
@@ -28,26 +27,30 @@ export default class PersonComponent extends AbstractCharacter {
     return weapon;
   }
 
-  build() {
-    this.legs = this.loadCharacterPart(CONFIG.legs.image);
-    this.leftArm = this.loadCharacterPart(CONFIG.arms.image.left);
-    this.body = this.loadCharacterPart(CONFIG.body.image);
-    this.head = this.loadCharacterPart(CONFIG.head.image);
-    this.rightArm = this.loadCharacterPart(CONFIG.arms.image.right);
+  async build() {
+    const images = await Promise.all([
+      this.loadCharacterPart(CONFIG.legs.image),
+      this.loadCharacterPart(CONFIG.arms.image.left),
+      this.loadCharacterPart(CONFIG.body.image),
+      this.loadCharacterPart(CONFIG.head.image),
+      this.loadCharacterPart(CONFIG.arms.image.right),
+    ]);
+    [
+      this.legs,
+      this.leftArm,
+      this.body,
+      this.head,
+      this.rightArm,
+    ] = images;
+    return this.draw();
   }
 
   loadCharacterPart(type) {
-    const image = new Image();
-    image.src = PersonComponent.getPath(type);
-    image.onload = () => this.onImageLoaded();
-    return image;
-  }
-
-  onImageLoaded() {
-    this.imagesLoadedCount += 1;
-    if (this.imagesLoadedCount === CONFIG.numberOfParts) {
-      this.draw();
-    }
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.src = PersonComponent.getPath(type);
+      image.onload = () => resolve(image);
+    });
   }
 
   async attack(callback) {

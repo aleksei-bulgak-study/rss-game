@@ -16,7 +16,6 @@ export default class MonsterComponent extends AbstractCharacter {
   constructor(canvasContext, name) {
     super(name, canvasContext, CONFIG);
     this.weapon = this.initWeaponComponent();
-    this.build();
   }
 
   initWeaponComponent() {
@@ -30,12 +29,23 @@ export default class MonsterComponent extends AbstractCharacter {
   }
 
   build() {
-    this.legs = this.loadRandom(CONFIG.legs.image);
-    this.leftArm = this.loadRandom(CONFIG.arms.image);
-    this.body = this.loadRandom(CONFIG.body.image);
-    this.head = this.loadRandom(CONFIG.head.image);
-    this.rightArm = this.loadRandom(CONFIG.arms.image);
-    this.dead = this.load(MonsterComponent.getPath(CONFIG.death.image, ''));
+    return Promise.all([
+      this.loadRandom(CONFIG.legs.image),
+      this.loadRandom(CONFIG.arms.image),
+      this.loadRandom(CONFIG.body.image),
+      this.loadRandom(CONFIG.head.image),
+      this.loadRandom(CONFIG.arms.image),
+      this.load(MonsterComponent.getPath(CONFIG.death.image, '')),
+    ]).then((images) => {
+      [
+        this.legs,
+        this.leftArm,
+        this.body,
+        this.head,
+        this.rightArm,
+        this.dead,
+      ] = images;
+    }).then(() => this.draw());
   }
 
   loadRandom(type) {
@@ -43,17 +53,11 @@ export default class MonsterComponent extends AbstractCharacter {
   }
 
   load(path) {
-    const image = new Image();
-    image.src = path;
-    image.onload = () => this.onImageLoaded();
-    return image;
-  }
-
-  onImageLoaded() {
-    this.imagesLoadedCount += 1;
-    if (this.imagesLoadedCount === CONFIG.numberOfParts) {
-      this.draw();
-    }
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.src = path;
+      image.onload = () => resolve(image);
+    });
   }
 
   drawHead() {

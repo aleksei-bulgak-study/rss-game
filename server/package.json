@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "rss mongodb game server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --coverage"
+  },
+  "keywords": [
+    "rss",
+    "game",
+    "server",
+    "mongo"
+  ],
+  "author": "Aleksei Bulgak",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.2"
+  }
+}

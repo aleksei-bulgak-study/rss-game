@@ -6,10 +6,7 @@ cache: npm
 
 branches:
   except:
-    - gh-pages
-
-before_install:
-  - cd game/  
+    - gh-pages 
 
 install:
   - npm install

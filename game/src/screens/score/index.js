@@ -7,7 +7,6 @@ const CONSTANTS = {
   element: 'div.container',
   scoreContainer: 'div.score-container table>tbody',
   retryAction: 'start',
-  enterKey: 13,
 };
 
 export default class ScoreBoard {
@@ -34,11 +33,6 @@ export default class ScoreBoard {
       const button = document.body.querySelector('button');
       button.focus();
       button.addEventListener('click', () => resolve(CONSTANTS.retryAction));
-      button.addEventListener('keyup', (event) => {
-        if (event.keyCode === CONSTANTS.enterKey) {
-          resolve(CONSTANTS.retryAction);
-        }
-      });
     });
   }
 

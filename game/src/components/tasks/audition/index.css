@@ -37,7 +37,10 @@
   border-color: transparent transparent transparent white;
 }
 
-.task_play:active {
+.task_play:active,
+.task_play:focus
+ {
+  background: #005bb1; 
   box-shadow: inset 0 0 10px #005bb1;
 }
 

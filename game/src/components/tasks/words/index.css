@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+.selected {
+  box-shadow: 0 0 10px #96b100;
+}
+
 .letter_value {
   padding: 0 0.5em;
   cursor: move;

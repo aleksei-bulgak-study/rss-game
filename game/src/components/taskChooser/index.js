@@ -10,6 +10,7 @@ import WordsTaskComponent from '../tasks/words';
 const CONST = {
   taskSelector: '.task-container_element',
   taskNameAttribute: 'id',
+  enterKey: 13,
 };
 
 export default class TaskChooserComponent extends ModalWindowComponent {
@@ -42,6 +43,11 @@ export default class TaskChooserComponent extends ModalWindowComponent {
         if (task) {
           this.clean();
           resolve(task);
+        }
+      });
+      this.modal.addEventListener('keyup', (event) => {
+        if (event.keyCode === CONST.enterKey) {
+          event.target.click();
         }
       });
     });

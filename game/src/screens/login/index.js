@@ -6,7 +6,6 @@ const CONSTANTS = {
   input: 'input#nickname',
   error: 'label.error',
   errorMessage: 'Nickname can not be null or empty',
-  enterKey: 13,
 };
 
 export default class Login {
@@ -38,11 +37,6 @@ export default class Login {
           resolve(nickName);
         }
         reject();
-      });
-      button.addEventListener('keyup', (event) => {
-        if (event.keyCode === CONSTANTS.enterKey) {
-          button.click();
-        }
       });
     });
   }

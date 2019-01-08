@@ -4,7 +4,7 @@
   "description": "Game task for RSSchool",
   "main": "./src/app.js",
   "scripts": {
-    "test": "jest --no-cache --coverage",
+    "test": "jest --no-cache --coverage --config jest.config.json",
     "lint": "eslint -c .eslintrc.json ./src/**/*.js",
     "build": "webpack --mode production",
     "build-debug": "webpack --mode development --watch",
@@ -30,6 +30,7 @@
     "@babel/preset-env": "^7.2.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-polyfill": "^6.26.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.0.1",
     "es6-promise": "^4.2.5",
@@ -51,10 +52,5 @@
     "@babel/polyfill": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(json)$": "<rootDir>/__mocks__/fileMock.js"
-    }
   }
 }

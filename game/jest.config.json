@@ -1,0 +1,14 @@
+{
+  "moduleNameMapper": {
+    "\\.(json)$": "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css)$": "<rootDir>/__mocks__/stylesMock.js"
+  },
+  "transform": {
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.html$": "<rootDir>/__tests__/utils/htmlLoader.js"
+  },
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "__tests__/utils"
+  ]
+}

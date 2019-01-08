@@ -1,9 +1,9 @@
 import 'jest';
 import '@babel/polyfill';
-import MathTaskComponent from '../../../src/components/tasks/math';
-import MathService from '../../../src/services/math';
+import TranlsationTaskComponent from '../../../src/components/tasks/translate';
+import TranslationService from '../../../src/services/translation';
 
-describe('MathTaskComponent', () => {
+describe('TranlsationTaskComponent', () => {
   beforeEach(() => {
     document.body.innerHTML = '<div class="container"></div>';
     jest.restoreAllMocks();
@@ -14,13 +14,13 @@ describe('MathTaskComponent', () => {
 
   describe('show', () => {
     it('render', () => {
-      const math = new MathTaskComponent();
-      math.show();
+      const translation = new TranlsationTaskComponent();
+      translation.show();
 
       expect(document.body.querySelector('div.modal>div.modal_content>div.task')).toBeDefined();
       expect(document.body.querySelector('div.modal>div.modal_content>div.task>p.task_title')).toBeDefined();
       expect(document.body.querySelector('p.task_title').innerHTML)
-        .toEqual('Please enter only the integer part of the result number');
+        .toEqual('Please enter translation of work specified below');
       expect(document.body.querySelector('div.modal>div.modal_content>div.task>p.task_description')).toBeDefined();
       expect(document.body.querySelector('div.modal>div.modal_content>div.task>input.task_input')).toBeDefined();
       expect(document.body.querySelector('div.modal>div.modal_content>div.task>button')).toBeDefined();
@@ -30,18 +30,18 @@ describe('MathTaskComponent', () => {
   describe('process', () => {
     it('press submit with valid value', async () => {
       // given
-      const value = 123456;
-      const isAnswerValidMock = jest.spyOn(MathService, 'isAnswerValid')
+      const value = 'test valid translation';
+      const isAnswerValidMock = jest.spyOn(TranslationService, 'isAnswerValid')
         .mockImplementationOnce(() => true);
 
-      const math = new MathTaskComponent();
-      math.show();
+      const translation = new TranlsationTaskComponent();
+      translation.show();
       const button = document.body.querySelector('.task_submit');
       const input = document.body.querySelector('.task_input');
       input.value = value;
 
       // when
-      const result = math.process(button);
+      const result = translation.process(button);
       button.click();
       const response = await (() => result)();
       expect(response).toEqual(true);
@@ -53,18 +53,18 @@ describe('MathTaskComponent', () => {
 
     it('press submit with invalid answer', async () => {
       // given
-      const value = 456;
-      const isAnswerValidMock = jest.spyOn(MathService, 'isAnswerValid')
+      const value = 'test invalid value';
+      const isAnswerValidMock = jest.spyOn(TranslationService, 'isAnswerValid')
         .mockImplementationOnce(() => false);
 
-      const math = new MathTaskComponent();
-      math.show();
+      const translation = new TranlsationTaskComponent();
+      translation.show();
       const button = document.body.querySelector('.task_submit');
       const input = document.body.querySelector('.task_input');
       input.value = value;
 
       // when
-      const result = math.process(button);
+      const result = translation.process(button);
       button.click();
       const response = await (() => result)();
       expect(response).toEqual(false);
@@ -78,11 +78,11 @@ describe('MathTaskComponent', () => {
   describe('clean', () => {
     it('test', async () => {
       // given
-      const math = new MathTaskComponent();
-      math.show();
+      const translation = new TranlsationTaskComponent();
+      translation.show();
 
       // when
-      math.clean();
+      translation.clean();
 
       // then
       expect(document.body.querySelector('.container').innerHTML).toEqual('');

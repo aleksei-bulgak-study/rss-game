@@ -11,13 +11,14 @@ import RandomNameGenerator from '../../services/name';
 const CONFIG = {
   element: 'div.container',
   canvas: 'canvas',
-  damage: 10,
+  damage: 100,
   dead: 0,
   initialLevel: 0,
   nextLevel: 1,
   banner: {
     text: 'Please wait. Loading components.',
-    style: '2em serif',
+    style: 'bold 3em serif',
+    color: 'white',
   },
 };
 
@@ -65,7 +66,9 @@ export default class Battle {
   async nextLevel() {
     await this.monster.death();
     this.session.level += CONFIG.nextLevel;
+    this.loaded = false;
     await this.initMonster(this.session);
+    this.loaded = true;
   }
 
   initPerson() {
@@ -110,6 +113,7 @@ export default class Battle {
   _drawBanner() {
     this.ctx.save();
     this.ctx.font = CONFIG.banner.style;
+    this.ctx.fillStyle = CONFIG.banner.color;
 
     const heightPosition = this.canvas.height / 2;
     const widthPosition = this.canvas.width / 2;

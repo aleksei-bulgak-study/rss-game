@@ -1,4 +1,5 @@
 import template from './index.template.html';
+import loading from './tmp.template.html';
 import './index.css';
 
 import ScoreService from '../../services/score';
@@ -21,8 +22,10 @@ export default class ScoreBoard {
   }
 
   async show() {
+    document.body.querySelector(CONSTANTS.element).innerHTML = loading;
+    const scores = await this.storage.load();
     document.body.querySelector(CONSTANTS.element).innerHTML = template;
-    await this._drawScores();
+    await this._drawScores(scores);
     return this._initEventListeners();
   }
 
@@ -38,9 +41,8 @@ export default class ScoreBoard {
     });
   }
 
-  async _drawScores() {
+  async _drawScores(scores) {
     const fragment = document.createDocumentFragment();
-    const scores = await this.storage.load();
     scores.sort((f, s) => s.level - f.level)
       .slice(0, 10)
       .forEach((score) => {

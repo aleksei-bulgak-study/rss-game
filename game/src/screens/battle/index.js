@@ -11,7 +11,7 @@ import RandomNameGenerator from '../../services/name';
 const CONFIG = {
   element: 'div.container',
   canvas: 'canvas',
-  damage: 100,
+  damage: 10,
   dead: 0,
   initialLevel: 0,
   nextLevel: 1,

@@ -19,16 +19,16 @@ export default class MathTaskComponent extends AbstractTask {
   }
 
   process() {
-    return new Promise((resoleve) => {
+    return new Promise((resolve) => {
       const task = MathService.getRandomTask();
       const input = this.modal.querySelector(CONST.task.input);
       this.modal.querySelector(CONST.task.description).innerHTML = task;
       this.modal.querySelector(CONST.task.submit).addEventListener('click', () => {
         const answer = parseInt(input.value, 10);
         if (MathService.isAnswerValid(task, answer)) {
-          resoleve(true);
+          resolve(true);
         }
-        resoleve(false);
+        resolve(false);
       });
     });
   }

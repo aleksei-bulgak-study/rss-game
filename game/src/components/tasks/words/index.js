@@ -47,15 +47,15 @@ export default class WordTaskComponent extends AbstractTaskComponent {
   }
 
   process() {
-    return new Promise((resoleve) => {
+    return new Promise((resolve) => {
       this._displayTask();
       this._applyListeners();
       const submit = this.modal.querySelector(CONST.task.submit);
       submit.addEventListener('click', () => {
         if (WordService.isAnswerValid(this._buildAnswer())) {
-          resoleve(true);
+          resolve(true);
         }
-        resoleve(false);
+        resolve(false);
       });
       this.modal.addEventListener('keydown', (event) => {
         if (event.keyCode === CONST.key.enter) {
@@ -63,11 +63,6 @@ export default class WordTaskComponent extends AbstractTaskComponent {
         }
       });
     });
-  }
-
-  clean() {
-    super.clean();
-    // TODO: clean listeners
   }
 
   _applyListeners() {

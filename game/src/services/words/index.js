@@ -9,6 +9,6 @@ export default class WordService {
   }
 
   static isAnswerValid(answer) {
-    return config.words.indexOf(Utils.normalizeText(answer)) !== -1;
+    return config.words.includes(Utils.normalizeText(answer));
   }
 }

@@ -19,15 +19,15 @@ export default class TranlsationTaskComponent extends AbstractTaskComponent {
   }
 
   process() {
-    return new Promise((resoleve) => {
+    return new Promise((resolve) => {
       const task = TranslationService.getRandomTask();
       const input = this.modal.querySelector(CONST.task.input);
       this.modal.querySelector(CONST.task.description).innerHTML = task;
       this.modal.querySelector(CONST.task.submit).addEventListener('click', () => {
         if (TranslationService.isAnswerValid(task, input.value)) {
-          resoleve(true);
+          resolve(true);
         }
-        resoleve(false);
+        resolve(false);
       });
     });
   }

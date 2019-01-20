@@ -19,14 +19,14 @@ export default class AuditionTaskComponent extends AbstractTaskComponent {
   }
 
   process() {
-    return new Promise((resoleve) => {
+    return new Promise((resolve) => {
       const task = SpeechService.getRandomTask();
       const input = this.modal.querySelector(CONST.task.input);
       this.modal.querySelector(CONST.task.submit).addEventListener('click', () => {
         if (SpeechService.isAnswerValid(task, input.value)) {
-          resoleve(true);
+          resolve(true);
         }
-        resoleve(false);
+        resolve(false);
       });
       this.modal.querySelector(CONST.task.play).addEventListener('click',
         async () => SpeechService.pronounce(task));

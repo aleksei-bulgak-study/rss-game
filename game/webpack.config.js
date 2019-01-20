@@ -1,12 +1,18 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.bundle.js',
+    filename: '[name].bundle.[hash].js',
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   module: {
     rules: [
@@ -43,10 +49,6 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: './src/index.html',
-        to: '../dist/index.html',
-      },
-      {
         from: './src/components/monster/images',
         to: '../dist/images/monster',
       },
@@ -71,6 +73,14 @@ module.exports = {
         to: '../dist/audio',
       },
     ]),
+    new HtmlWebpackPlugin({
+      title: 'Facepalm game',
+      filename: 'index.html',
+      meta: {
+        viewport: 'width=device-width, initial-scale=1',
+        'Content-Security-Policy': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+      },
+    }),
   ],
 
   devtool: 'inline-source-map',

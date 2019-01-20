@@ -1,6 +1,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -47,6 +48,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin('dist'),
     new CopyWebpackPlugin([
       {
         from: './src/components/monster/images',
@@ -76,9 +78,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Facepalm game',
       filename: 'index.html',
+      cache: true,
       meta: {
         viewport: 'width=device-width, initial-scale=1',
         'Content-Security-Policy': { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+        'Cache-control': { 'http-equiv': 'Cache-control', content: 'public' },
       },
     }),
   ],

@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "7"
+  - "12"
 
 cache: npm
 
@@ -9,7 +9,7 @@ branches:
     - gh-pages
 
 before_install:
-  - cd game/  
+  - cd game/
 
 install:
   - npm install
@@ -23,7 +23,7 @@ deploy:
   local-dir: ./game/dist
   provider: pages
   skip-cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  github-token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
   keep-history: true
   on:
     branch: master
